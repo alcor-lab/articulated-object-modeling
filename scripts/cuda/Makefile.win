@@ -1,0 +1,11 @@
+NVCC = nvcc
+CUDA_OPTIONS = -ptx -arch=compute_32 -code=sm_32 --ptxas-options=-v
+CFLAGS = -I. -DITER
+
+all: udf 
+
+udf: udf_kern.cu $(DEPS)
+	$(NVCC) $(CUDA_OPTIONS) -o $@.ptx %s $(CFLAGS) 1>&2
+
+clean:
+	rm *.ptx
